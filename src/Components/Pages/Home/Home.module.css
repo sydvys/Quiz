@@ -1,0 +1,13 @@
+.main{
+    background-color:plum;
+    margin: auto;
+    height: 100dvh;
+    justify-content: center;
+    align-items: center;
+}
+
+.TextField{
+    width: 70%;
+    margin: 100px;
+
+}
