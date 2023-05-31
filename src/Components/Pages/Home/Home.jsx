@@ -2,37 +2,18 @@ import { Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-import React, { useState } from 'react';
-import Styles from './Home.module.css';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Categories from '../../Categories/Categories';
+import { QUIZ_CONTEXT } from '../../Contexts/Contexts';
+import Styles from './Home.module.css';
 
-const currencies = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'BTC',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
 
 const Home = () => {
 
   const navigate = useNavigate();
-
-  const [category, setCategory] = useState("")
-  const [difficulty, setDifficulty] = useState("")
-  const [number, setNumber] = useState(0)
   const [error, setError] = useState(false)
+  const {number, setNumber, difficulty, setDifficulty, category, setCategory} =useContext(QUIZ_CONTEXT)
 
 
   return (
@@ -44,11 +25,12 @@ const Home = () => {
         label="Number"
         type="number"
         defaultValue="0"
-        value={number}
         InputLabelProps={{
           shrink: true,
         }}
-        onChange={(e) => setNumber(e.target.value)}
+        onChange={(event) => {
+          setNumber(event.target.value)
+        }}
       />
 
       <TextField
@@ -61,9 +43,9 @@ const Home = () => {
         value={category}
         onChange={(e) => setCategory(e.target.value)}
       >
-        {currencies.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
+        {Categories.map((cat) => (
+          <MenuItem key={cat.category} value={cat.value}>
+            {cat.category}
           </MenuItem>
         ))}
       </TextField>
@@ -77,22 +59,26 @@ const Home = () => {
         value={difficulty}
         onChange={(e) => setDifficulty(e.target.value)}
       >
-        {currencies.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
+        <MenuItem key="Easy" value="easy">
+          Easy
+        </MenuItem>
+        <MenuItem key="Medium" value="medium">
+          Medium
+        </MenuItem>
+        <MenuItem key="Hard" value="hard">
+          Hard
+        </MenuItem>
       </TextField>
 
-      <Button sx={{ my: 3, px: 5 }} size="large" variant="contained" 
-      onClick={() => {
-        if (!category || !difficulty || !number) {
-          setError(true)
-        } else {
-          setError(false);
-          navigate("/Quiz")
-        }
-      }} 
+      <Button sx={{ my: 3, px: 5 }} size="large" variant="contained"
+        onClick={() => {
+          if (!category || !difficulty || !number) {
+            setError(true)
+          } else {
+            setError(false);
+            navigate("/Quiz")
+          }
+        }}
       // href='http://localhost:3000/quiz'
       >Start The Quiz</Button>
 
