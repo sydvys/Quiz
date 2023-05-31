@@ -13,10 +13,11 @@ const Home = () => {
 
   const navigate = useNavigate();
   const [error, setError] = useState(false)
-  const {number, setNumber, difficulty, setDifficulty, category, setCategory} =useContext(QUIZ_CONTEXT)
+  const { number, setNumber, difficulty, setDifficulty, category, setCategory } = useContext(QUIZ_CONTEXT)
 
-
+  
   return (
+    <>
     <Stack className={Styles.main} >
 
       <TextField
@@ -83,6 +84,7 @@ const Home = () => {
       >Start The Quiz</Button>
 
     </Stack>
+    </>
   )
 }
 
