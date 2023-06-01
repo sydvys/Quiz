@@ -8,13 +8,10 @@ import Categories from '../../Categories/Categories';
 import { QUIZ_CONTEXT } from '../../Contexts/Contexts';
 import Styles from './Home.module.css';
 
-
 const Home = () => {
-
   const navigate = useNavigate();
   const [error, setError] = useState(false)
   const { number, setNumber, difficulty, setDifficulty, category, setCategory } = useContext(QUIZ_CONTEXT)
-
 
   return (
     <>
@@ -52,7 +49,6 @@ const Home = () => {
         </TextField>
 
         <TextField
-          // sx={{ my: 4 }}
           className={Styles.TextField}
           id="outlined-select-currency"
           label="Difficulty"
