@@ -1,5 +1,5 @@
+import axios from "axios";
 import { createContext, useState } from "react";
-import Axios from "axios"
 
 
 export const QUIZ_CONTEXT = createContext({})
@@ -12,28 +12,20 @@ const Contexts = ({ children }) => {
     const [questions, setQuestions] = useState()
     const [score, setScore] = useState(0)
 
-    const [joke, setJoke] = useState("")
 
-    const getJoke = () => {
-        Axios.get(
-            " https://official-joke-api.appspot.com/jokes/random"
-        ).then((response) => {
-            setJoke(response.data.setup + response.data.punchline)
-        })
+    const url = `https://opentdb.com/api.php?${number && `&amount=${number}`
+}${category && `&category=${category}`
+        }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
+
+
+    const getQuestions = async () => {
+        const { data } = await axios.get(url);
+        setQuestions(data.results);
+
     };
 
-
-
-    const getQuestions = () => {
-        Axios.get(
-            `https://opentdb.com/api.php?amount=${number}&category=${category}&difficulty=${difficulty}&type=multiple`
-        ).then((response) => {
-            setQuestions(response.data.results.question)
-        })
-    }
-
     return (
-        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, category, setCategory, getJoke, joke, setJoke, questions, setQuestions, getQuestions }}>
+        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, category, setCategory, questions, setQuestions, getQuestions }}>
             {children}
         </QUIZ_CONTEXT.Provider>
     )
