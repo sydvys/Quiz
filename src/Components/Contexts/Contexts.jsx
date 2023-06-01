@@ -14,7 +14,7 @@ const Contexts = ({ children }) => {
 
 
     const url = `https://opentdb.com/api.php?${number && `&amount=${number}`
-}${category && `&category=${category}`
+        }${category && `&category=${category}`
         }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
 
 

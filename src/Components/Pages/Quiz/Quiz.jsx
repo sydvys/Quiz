@@ -10,7 +10,7 @@ const Quiz = ({ }) => {
 
   return (
     <>
-      <Button onClick={() => (getQuestions()) }>get questions </Button> 
+      <Button onClick={() => (getQuestions())}>get questions </Button>
       <div>number of questions :  {number} </div>
       <div>chosen category :  {category} </div>
       <div>chosen difficulty :  {difficulty} </div>
