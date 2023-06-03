@@ -11,7 +11,7 @@ const Contexts = ({ children }) => {
     const [questions, setQuestions] = useState([])
     const [score, setScore] = useState(0)
 
-    const url = `https://opentdb.com/api.php?${number && `&amount=${number}`}${category && `&category=${category}`}${difficulty && `&difficulty=${difficulty}`}&type=multiple`
+    const url = `https://opentdb.com/api.php?${number && `&amount=${number}`}${category && `&category=${category}`}${difficulty && `&difficulty=${difficulty}`}&type=boolean`
 
     const getQuestions = async () => {
         const { data } = await axios.get(url);
