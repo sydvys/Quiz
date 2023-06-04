@@ -1,11 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import Radio from '@mui/material/Radio';
-import { useContext, useEffect, useState } from "react";
-import { QUIZ_CONTEXT } from "../../Contexts/Contexts";
 import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { useContext, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-
+import { QUIZ_CONTEXT } from "../../Contexts/Contexts";
+import Styles from './Quiz.module.css'
 
 
 const Quiz = ({ }) => {
@@ -15,10 +14,6 @@ const Quiz = ({ }) => {
   useEffect(() => {
     getQuestions()
   }, [])
-
-  
- 
-
 
   return (
     <>
@@ -37,10 +32,21 @@ const Quiz = ({ }) => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
               >
-                <Radio name="answers" value="False" lable="False" onChange={event => setRadio(+event.target.value)} /> fales
-                <Radio name="answers" value="True" lable="True" onChange={event => setRadio(+event.target.value)} /> true
+                <Radio 
+                value="True" 
+                lable="True"  
+                onChange={event => setRadio(event.target.value)} 
+                checked={radio === "True"}
+                /> true
 
-                {(setQuestions.correct_answer == radio) ? console.log("t") : console.log("f")}
+                <Radio 
+                value="False"
+                lable="False" 
+                onChange={event => setRadio(event.target.value)} 
+                checked={radio === "False"}
+                /> false
+
+                {(setQuestions.correct_answer === radio) ? <div className={Styles.true}>correct</div> : <div className={Styles.false}>incorrect</div> }
               </RadioGroup>
             </Box>
           )

@@ -8,6 +8,7 @@ import Categories from '../../Categories/Categories';
 import { QUIZ_CONTEXT } from '../../Contexts/Contexts';
 import Styles from './Home.module.css';
 
+
 const Home = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(false)
@@ -16,6 +17,8 @@ const Home = () => {
   return (
     <>
       <Stack className={Styles.main} >
+        
+        {error ? <p className={Styles.error} > All Fields Must Be Filled </p> : null}
 
         <TextField
           className={Styles.TextField}
@@ -71,14 +74,19 @@ const Home = () => {
           onClick={() => {
             if (!category || !difficulty || !number) {
               setError(true)
+
+              setTimeout(() => {
+                setError(false)
+              }, 2000)
+              
             } else {
               setError(false);
               navigate("/Quiz")
+              
             }
           }}
         // href='http://localhost:3000/quiz'
         >Start The Quiz</Button>
-
       </Stack>
     </>
   )
