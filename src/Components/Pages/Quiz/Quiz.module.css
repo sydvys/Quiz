@@ -1,7 +1,9 @@
 .true{
-    color: greenyellow;
+    padding: 0 10px 0 20px;
+    color: rgb(0, 223, 7);
 }
 
 .false{
+    padding: 0 10px 0 20px;
     color: red;
 }

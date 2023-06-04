@@ -25,14 +25,9 @@ const Quiz = ({ }) => {
           return (
             <Box key={uuidv4()} sx={{ my: 2, mx: "auto", maxWidth: "90vw" }}>
               <Typography sx={{ px: 5 }}>Question : {setQuestions.question}</Typography>
-              <Typography sx={{ px: 5, py: 1 }}>Answers : {setQuestions.correct_answer}</Typography>
 
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-              >
-                <Radio 
+                <Radio
+                className={Styles.true}
                 value="True" 
                 lable="True"  
                 onChange={event => setRadio(event.target.value)} 
@@ -46,8 +41,8 @@ const Quiz = ({ }) => {
                 checked={radio === "False"}
                 /> false
 
-                {(setQuestions.correct_answer === radio) ? <div className={Styles.true}>correct</div> : <div className={Styles.false}>incorrect</div> }
-              </RadioGroup>
+                {(setQuestions.correct_answer === radio) ? <div className={Styles.true}>Your Answer Is Correct</div> : <div className={Styles.false}>Your Answer Is Incorrect</div> }
+
             </Box>
           )
         })}
