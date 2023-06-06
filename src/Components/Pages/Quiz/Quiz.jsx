@@ -11,15 +11,11 @@ const Quiz = ({ }) => {
   const { questions, getQuestions } = useContext(QUIZ_CONTEXT)
   const [radio, setRadio] = useState("")
 
-  useEffect(() => {
-    getQuestions()
-  }, [])
-
   return (
     <>
       <Typography variant="h3" sx={{ textAlign: "center", py: 5 }}> Questions </Typography>
 
-      <getQuestions>
+   
         {questions.map((setQuestions) => {
           console.log(setQuestions.correct_answer)
           return (
@@ -47,7 +43,7 @@ const Quiz = ({ }) => {
           )
         })}
 
-      </getQuestions>
+      
 
     </>
   )

@@ -4,20 +4,29 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Categories from '../../Categories/Categories';
+// import Categories from '../../Categories/Categories';
 import { QUIZ_CONTEXT } from '../../Contexts/Contexts';
 import Styles from './Home.module.css';
+
 
 
 const Home = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(false)
-  const { number, setNumber, difficulty, setDifficulty, category, setCategory } = useContext(QUIZ_CONTEXT)
+  const { number, setNumber, difficulty, setDifficulty, category, setCategory, questions, setQuestions, categories } = useContext(QUIZ_CONTEXT)
+
+  const difficultyLevels = [
+    { value: 'easy', label: 'Easy' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'hard', label: 'Hard' },
+  ];
+
+
 
   return (
     <>
       <Stack className={Styles.main} >
-        
+
         {error ? <p className={Styles.error} > All Fields Must Be Filled </p> : null}
 
         <TextField
@@ -29,24 +38,25 @@ const Home = () => {
           InputLabelProps={{
             shrink: true,
           }}
+          name='number'
           onChange={(event) => {
             setNumber(event.target.value)
           }}
         />
 
         <TextField
-          className={Styles.TextField}
           sx={{ my: 4 }}
+          className={Styles.TextField}
           id="outlined-select-currency"
           select
           label="Category"
-          defaultValue="EUR"
           value={category}
+          name='category'
           onChange={(e) => setCategory(e.target.value)}
         >
-          {Categories.map((cat) => (
-            <MenuItem key={cat.category} value={cat.value}>
-              {cat.category}
+          {categories.map((category) => (
+            <MenuItem key={category.id} value={category.name}>
+              {category.name}
             </MenuItem>
           ))}
         </TextField>
@@ -54,38 +64,32 @@ const Home = () => {
         <TextField
           className={Styles.TextField}
           id="outlined-select-currency"
+          select
           label="Difficulty"
-          defaultValue="Easy"
           value={difficulty}
+          name='difficulty'
           onChange={(e) => setDifficulty(e.target.value)}
         >
-          <MenuItem key="Easy" value="easy">
-            Easy
-          </MenuItem>
-          <MenuItem key="Medium" value="medium">
-            Medium
-          </MenuItem>
-          <MenuItem key="Hard" value="hard">
-            Hard
-          </MenuItem>
+          {difficultyLevels.map((level) => (
+            <MenuItem key={level.value} value={level.value}>
+              {level.label}
+              {console.log(level.label)}
+            </MenuItem>
+          ))}
         </TextField>
 
         <Button sx={{ my: 3, px: 5 }} size="large" variant="contained"
           onClick={() => {
-            if (!category || !difficulty || !number) {
+            if (!number || !category || !difficulty) {
               setError(true)
-
               setTimeout(() => {
                 setError(false)
               }, 2000)
-              
             } else {
               setError(false);
               navigate("/Quiz")
-              
             }
           }}
-        // href='http://localhost:3000/quiz'
         >Start The Quiz</Button>
       </Stack>
     </>

@@ -1,25 +1,55 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const QUIZ_CONTEXT = createContext({})
 
 const Contexts = ({ children }) => {
 
-    const [category, setCategory] = useState("")
-    const [difficulty, setDifficulty] = useState("")
-    const [number, setNumber] = useState('')
-    const [questions, setQuestions] = useState([])
-    const [score, setScore] = useState(0)
+    const [category, setCategory] = useState([]);
+    const [difficulty, setDifficulty] = useState([]);
+    const [number, setNumber] = useState('');
+    const [questions, setQuestions] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [difficultyLevels, setDifficultyLevels] = useState([]);
 
-    const url = `https://opentdb.com/api.php?${number && `&amount=${number}`}${category && `&category=${category}`}${difficulty && `&difficulty=${difficulty}`}&type=boolean`
 
-    const getQuestions = async () => {
-        const { data } = await axios.get(url);
-        setQuestions(data.results);
-    };
 
+    const mainUrl = `https://opentdb.com/api.php?${number && `&amount=${number}`}${category && `&category=${category}`}${difficulty && `&difficulty=${difficulty}`}&type=boolean`
+    const categoryUrl = `https://opentdb.com/api_category.php`
+
+    const fetchCategories = async () => {
+          const response = await axios.get(categoryUrl);
+          const { trivia_categories } = response.data;
+          setCategories(trivia_categories);
+      };
+
+      useEffect(() => {
+        fetchCategories()
+      }, [])
+
+
+    const fetchData = async () => {
+          const response = await axios.get(mainUrl);
+          setQuestions(response.data);
+      };
+
+      useEffect(() => {
+        fetchData();
+      }, [])
+    
+    //     const fetchDifficulty = async () => {
+    //         const response = await axios.get('https://opentdb.com/api_category.php');
+    //         const { data } = response;
+    //         setDifficulty(data.difficulty);
+    //     };
+
+    //   useEffect(() => {
+    //     fetchDifficulty();
+    //   }, []);
+    
+    
     return (
-        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, category, setCategory, questions, setQuestions, getQuestions }}>
+        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, category, setCategory, questions, setQuestions,  category, setCategory, fetchCategories, fetchData, categories, setCategories, difficultyLevels, setDifficultyLevels,  }}>
             {children}
         </QUIZ_CONTEXT.Provider>
     )
