@@ -12,13 +12,10 @@ const Contexts = ({ children }) => {
     const [categories, setCategories] = useState([]);
     const [difficultyLevels, setDifficultyLevels] = useState([]);
 
-
-
-    const mainUrl = `https://opentdb.com/api.php?${number && `&amount=${number}`}${category && `&category=${category}`}${difficulty && `&difficulty=${difficulty}`}&type=boolean`
-    const categoryUrl = `https://opentdb.com/api_category.php`
+    const url = `https://opentdb.com/api.php?${number && `&amount=${number}`}${category && `&category=${category}`}${difficulty && `&difficulty=${difficulty}`}&type=boolean`;
 
     const fetchCategories = async () => {
-          const response = await axios.get(categoryUrl);
+          const response = await axios.get(`https://opentdb.com/api_category.php`);
           const { trivia_categories } = response.data;
           setCategories(trivia_categories);
       };
@@ -29,27 +26,17 @@ const Contexts = ({ children }) => {
 
 
     const fetchData = async () => {
-          const response = await axios.get(mainUrl);
-          setQuestions(response.data);
+          const response = await axios.get(url);
+          setQuestions(response.data.results);
+          console.log(response.data.results);
       };
 
       useEffect(() => {
         fetchData();
-      }, [])
-    
-    //     const fetchDifficulty = async () => {
-    //         const response = await axios.get('https://opentdb.com/api_category.php');
-    //         const { data } = response;
-    //         setDifficulty(data.difficulty);
-    //     };
-
-    //   useEffect(() => {
-    //     fetchDifficulty();
-    //   }, []);
-    
+      }, [number, category, difficulty])    
     
     return (
-        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, category, setCategory, questions, setQuestions,  category, setCategory, fetchCategories, fetchData, categories, setCategories, difficultyLevels, setDifficultyLevels,  }}>
+        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, questions, setQuestions,  category, setCategory, fetchCategories, fetchData, categories, setCategories, difficultyLevels, setDifficultyLevels,  }}>
             {children}
         </QUIZ_CONTEXT.Provider>
     )

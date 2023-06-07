@@ -4,16 +4,17 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import Categories from '../../Categories/Categories';
 import { QUIZ_CONTEXT } from '../../Contexts/Contexts';
 import Styles from './Home.module.css';
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 
 const Home = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(false)
-  const { number, setNumber, difficulty, setDifficulty, category, setCategory, questions, setQuestions, categories } = useContext(QUIZ_CONTEXT)
+  const { number, setNumber, difficulty, setDifficulty, category, setCategory, questions, setQuestions, fetchData, categories } = useContext(QUIZ_CONTEXT)
 
   const difficultyLevels = [
     { value: 'easy', label: 'Easy' },
@@ -21,7 +22,12 @@ const Home = () => {
     { value: 'hard', label: 'Hard' },
   ];
 
+  {
+    console.log("Number:", number);
+    console.log("Category:", category);
+    console.log("Difficulty:", difficulty);
 
+  }
 
   return (
     <>
@@ -73,7 +79,7 @@ const Home = () => {
           {difficultyLevels.map((level) => (
             <MenuItem key={level.value} value={level.value}>
               {level.label}
-              {console.log(level.label)}
+              {/* {console.log(level.label)} */}
             </MenuItem>
           ))}
         </TextField>
@@ -89,7 +95,8 @@ const Home = () => {
               setError(false);
               navigate("/Quiz")
             }
-          }}
+          }
+          }
         >Start The Quiz</Button>
       </Stack>
     </>
