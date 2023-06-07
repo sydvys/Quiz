@@ -11,6 +11,8 @@ const Contexts = ({ children }) => {
     const [questions, setQuestions] = useState([]);
     const [categories, setCategories] = useState([]);
     const [difficultyLevels, setDifficultyLevels] = useState([]);
+    const [score, setScore] = useState(0);
+    const [radio, setRadio] = useState("")
 
     const url = `https://opentdb.com/api.php?${number && `&amount=${number}`}${category && `&category=${category}`}${difficulty && `&difficulty=${difficulty}`}&type=boolean`;
 
@@ -36,7 +38,7 @@ const Contexts = ({ children }) => {
       }, [number, category, difficulty])    
     
     return (
-        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, questions, setQuestions,  category, setCategory, fetchCategories, fetchData, categories, setCategories, difficultyLevels, setDifficultyLevels,  }}>
+        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, questions, setQuestions,  category, setCategory, fetchCategories, fetchData, categories, setCategories, difficultyLevels, setDifficultyLevels, score, setScore, radio, setRadio }}>
             {children}
         </QUIZ_CONTEXT.Provider>
     )

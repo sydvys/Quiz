@@ -6,9 +6,6 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QUIZ_CONTEXT } from '../../Contexts/Contexts';
 import Styles from './Home.module.css';
-import { v4 as uuidv4 } from 'uuid';
-
-
 
 
 const Home = () => {
@@ -21,13 +18,6 @@ const Home = () => {
     { value: 'medium', label: 'Medium' },
     { value: 'hard', label: 'Hard' },
   ];
-
-  {
-    console.log("Number:", number);
-    console.log("Category:", category);
-    console.log("Difficulty:", difficulty);
-
-  }
 
   return (
     <>
