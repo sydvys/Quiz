@@ -11,7 +11,7 @@ import Styles from './Home.module.css';
 const Home = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(false)
-  const { number, setNumber, difficulty, setDifficulty, category, setCategory, questions, setQuestions, fetchData, categories } = useContext(QUIZ_CONTEXT)
+  const { number, setNumber, difficulty, setDifficulty, category, setCategory, categories } = useContext(QUIZ_CONTEXT)
 
   const difficultyLevels = [
     { value: 'easy', label: 'Easy' },

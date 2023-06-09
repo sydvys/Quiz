@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const QUIZ_CONTEXT = createContext({})
 
@@ -11,7 +11,6 @@ const Contexts = ({ children }) => {
     const [questions, setQuestions] = useState([]);
     const [categories, setCategories] = useState([]);
     const [difficultyLevels, setDifficultyLevels] = useState([]);
-    const [score, setScore] = useState(0);
     const [radio, setRadio] = useState("")
 
     const url = `https://opentdb.com/api.php?${number && `&amount=${number}`}${category && `&category=${category}`}${difficulty && `&difficulty=${difficulty}`}&type=boolean`;
@@ -38,7 +37,7 @@ const Contexts = ({ children }) => {
       }, [number, category, difficulty])    
     
     return (
-        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, questions, setQuestions,  category, setCategory, fetchCategories, fetchData, categories, setCategories, difficultyLevels, setDifficultyLevels, score, setScore, radio, setRadio }}>
+        <QUIZ_CONTEXT.Provider value={{ number, setNumber, difficulty, setDifficulty, questions, setQuestions,  category, setCategory, fetchCategories, fetchData, categories, setCategories, difficultyLevels, setDifficultyLevels, radio, setRadio }}>
             {children}
         </QUIZ_CONTEXT.Provider>
     )

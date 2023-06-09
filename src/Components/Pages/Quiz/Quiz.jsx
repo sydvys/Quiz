@@ -1,25 +1,24 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Check, Clear } from '@mui/icons-material';
 import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import { useContext, useEffect, useState } from "react";
+import he from 'he';
+import { useContext, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { QUIZ_CONTEXT } from "../../Contexts/Contexts";
-import Styles from './Quiz.module.css'
-import he from 'he';
-import { Check, Clear } from '@mui/icons-material';
+import Styles from './Quiz.module.css';
 import { useNavigate } from 'react-router-dom';
 
 
 
 const Quiz = ({ }) => {
-  const { questions, setQuestions, fetchData, score, setScore, radio, setRadio } = useContext(QUIZ_CONTEXT)
+  const { questions, radio, setRadio } = useContext(QUIZ_CONTEXT)
+  const [score, setScore] = useState(0);
 
-  const handleAnswerSelection = (selectedAnswer) => {
-    if (selectedAnswer === setQuestions.correct_answer) {
-      setScore(score + 1);
-    }
-  };
-
+  const handleRadioChange = (event) => {
+    setRadio(event.target.value);
+    const selectedQuestion = questions.find((question) => question.correct_answer === radio);
+    const newScore = selectedQuestion ? score + 1 : score;
+    setScore(newScore);
+  }
 
   return (
     <>
@@ -32,31 +31,20 @@ const Quiz = ({ }) => {
               <p>{he.decode(setQuestions.question)}</p>
 
               <Radio
-                type="radio"
-                label="True"
                 value="True"
-                onChange={(event) => {
-                  setRadio(event.target.value);
-                  handleAnswerSelection(event.target.value);
-                }} 
+                onChange={handleRadioChange}
                 checked={radio === "True"}
               />
               <label>t</label>
 
               <Radio
-                type="radio"
-                label="False"
                 value="False"
-                onChange={(event) => {
-                  setRadio(event.target.value);
-                  handleAnswerSelection(event.target.value);
-                }} 
+                onChange={handleRadioChange}
                 checked={radio === "False"}
               />
               <label>f</label>
 
               {(setQuestions.correct_answer === radio) ? <Check className={Styles.true} /> : <Clear className={Styles.false} />}
-
 
             </div>
           )
@@ -64,7 +52,7 @@ const Quiz = ({ }) => {
         )
       }
 
-      <p>Total Score: {score}</p>
+      <p>Total Score: {score} </p>
 
 
     </>
