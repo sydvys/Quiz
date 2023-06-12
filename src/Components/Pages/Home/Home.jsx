@@ -11,7 +11,7 @@ import Styles from './Home.module.css';
 const Home = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(false)
-  const { number, setNumber, difficulty, setDifficulty, category, setCategory, categories } = useContext(QUIZ_CONTEXT)
+  const { number, setNumber, difficulty, setDifficulty, category, setCategory, categories, fetchData } = useContext(QUIZ_CONTEXT)
 
   const difficultyLevels = [
     { value: 'easy', label: 'Easy' },
@@ -48,10 +48,13 @@ const Home = () => {
           label="Category"
           value={category}
           name='category'
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => {
+            setCategory(e.target.value);
+            fetchData();
+          }}
         >
           {categories.map((category) => (
-            <MenuItem key={category.id} value={category.name}>
+            <MenuItem key={category.id} value={category.id}>
               {category.name}
             </MenuItem>
           ))}
@@ -64,25 +67,29 @@ const Home = () => {
           label="Difficulty"
           value={difficulty}
           name='difficulty'
-          onChange={(e) => setDifficulty(e.target.value)}
-        >
+          onChange={(e) => {
+            setDifficulty(e.target.value);
+            fetchData();
+          }}        >
           {difficultyLevels.map((level) => (
             <MenuItem key={level.value} value={level.value}>
               {level.label}
-              {/* {console.log(level.label)} */}
             </MenuItem>
           ))}
         </TextField>
 
-        <Button sx={{ my: 3, px: 5 }} size="large" variant="contained"
+        <Button
+          sx={{ my: 3, px: 5 }}
+          size="large"
+          variant="contained"
           onClick={() => {
+            setError(false);
             if (!number || !category || !difficulty) {
               setError(true)
               setTimeout(() => {
                 setError(false)
               }, 2000)
             } else {
-              setError(false);
               navigate("/Quiz")
             }
           }
