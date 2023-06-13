@@ -11,7 +11,7 @@ import Styles from './Home.module.css';
 const Home = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(false)
-  const { number, setNumber, difficulty, setDifficulty, category, setCategory, categories, fetchData } = useContext(QUIZ_CONTEXT)
+  const { number, setNumber, difficulty, setDifficulty, category, setCategory, categories, fetchData, fetchCategories } = useContext(QUIZ_CONTEXT)
 
   const difficultyLevels = [
     { value: 'easy', label: 'Easy' },
@@ -83,18 +83,20 @@ const Home = () => {
           size="large"
           variant="contained"
           onClick={() => {
-            setError(false);
-            if (!number || !category || !difficulty) {
+            if (number === '' || category === '' || difficulty === '') {
               setError(true)
               setTimeout(() => {
                 setError(false)
               }, 2000)
+              return;
             } else {
+              setError(false);
               navigate("/Quiz")
             }
           }
           }
-        >Start The Quiz</Button>
+        >Start The Quiz
+        </Button>
       </Stack>
     </>
   )

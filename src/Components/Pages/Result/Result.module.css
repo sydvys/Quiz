@@ -1,0 +1,7 @@
+.result {
+    margin: auto;
+    height: 80dvh;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}

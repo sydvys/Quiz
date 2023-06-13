@@ -11,17 +11,19 @@ import { Button } from '@mui/material';
 
 
 const Quiz = ({ }) => {
-  const { questions, radio, setRadio, score, setScore, setQuestions } = useContext(QUIZ_CONTEXT)
+  const { questions, setScore, setQuestions } = useContext(QUIZ_CONTEXT)
   const navigate = useNavigate();
 
-  const handleRadioChange = (event) => {
+  const handleRadioChange = (event, index) => {
     const selectedAnswer = event.target.value;
-    setRadio(selectedAnswer);
+    const updatedQuestions = [...questions];
+    updatedQuestions[index].radio = selectedAnswer;
+    setQuestions(updatedQuestions);
 
-    const currentQuestion = questions.find((question) => question.correct_answer === selectedAnswer);
+    const currentQuestion = updatedQuestions[index];
 
-    if (currentQuestion && currentQuestion.correct_answer === selectedAnswer) {
-      setScore(score + 1);
+    if (currentQuestion.correct_answer === selectedAnswer) {
+      setScore((prevScore) => prevScore + 1);
     }
   };
 
@@ -29,28 +31,28 @@ const Quiz = ({ }) => {
   return (
     <>
       {
-        questions.map((setQuestions, index) => {
-          console.log(setQuestions.question);
+        questions.map((question, index) => {
+          console.log(question.question);
           return (
             <div key={uuidv4()} >
               <h3>Question {index + 1}</h3>
-              <p>{he.decode(setQuestions.question)}</p>
+              <p>{he.decode(question.question)}</p>
 
               <Radio
                 value="True"
-                onChange={handleRadioChange}
-                checked={radio === "True"}
+                onChange={(event) => handleRadioChange(event, index)}
+                checked={question.radio === "True"}
               />
               <label>t</label>
 
               <Radio
                 value="False"
-                onChange={handleRadioChange}
-                checked={radio === "False"}
+                onChange={(event) => handleRadioChange(event, index)}
+                checked={question.radio === "False"}
               />
               <label>f</label>
 
-              {(setQuestions.correct_answer === radio) ? <Check className={Styles.true} /> : <Clear className={Styles.false} />}
+              {(question.correct_answer === question.radio) ? <Check className={Styles.true} /> : <Clear className={Styles.false} />}
 
             </div>
           )
@@ -58,11 +60,13 @@ const Quiz = ({ }) => {
         )
       }
 
-      score{score}
-
-      {/* <Button onClick={navigate("/Result")}>
-  get total score
-</Button> */}
+      <Button
+        sx={{ my: 3, px: 5 }}
+        size="large"
+        variant="contained"
+        onClick={() => navigate("/Result")}>
+        get score
+      </Button>
 
     </>
   )
