@@ -7,10 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { QUIZ_CONTEXT } from '../../Contexts/Contexts';
 import Styles from './Home.module.css';
 
-
 const Home = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(false)
   const { number, setNumber, difficulty, setDifficulty, category, setCategory, categories, fetchData, fetchCategories } = useContext(QUIZ_CONTEXT)
 
   const difficultyLevels = [
@@ -19,11 +17,22 @@ const Home = () => {
     { value: 'hard', label: 'Hard' },
   ];
 
+
+  const [isNumberValid, setNumberValid] = useState(false);
+  const [isCategoryValid, setCategoryValid] = useState(false);
+  const [isDifficultyValid, setDifficultyValid] = useState(false);
+
+  // Function to check if all fields are filled
+  const areAllFieldsFilled = () => {
+    return isNumberValid && isCategoryValid && isDifficultyValid;
+  };
+
+
+
   return (
     <>
       <Stack className={Styles.main} >
 
-        {error ? <p className={Styles.error} > All Fields Must Be Filled </p> : null}
 
         <TextField
           className={Styles.TextField}
@@ -35,8 +44,11 @@ const Home = () => {
             shrink: true,
           }}
           name='number'
+          value={number}
           onChange={(event) => {
             setNumber(event.target.value)
+            setNumberValid(event.target.value !== ''); // Set validation status based on field value
+
           }}
         />
 
@@ -51,6 +63,8 @@ const Home = () => {
           onChange={(e) => {
             setCategory(e.target.value);
             fetchData();
+            setCategoryValid(e.target.value !== ''); // Set validation status based on field value
+
           }}
         >
           {categories.map((category) => (
@@ -70,6 +84,8 @@ const Home = () => {
           onChange={(e) => {
             setDifficulty(e.target.value);
             fetchData();
+            setDifficultyValid(e.target.value !== '');
+
           }}        >
           {difficultyLevels.map((level) => (
             <MenuItem key={level.value} value={level.value}>
@@ -78,25 +94,26 @@ const Home = () => {
           ))}
         </TextField>
 
-        <Button
-          sx={{ my: 3, px: 5 }}
-          size="large"
-          variant="contained"
-          onClick={() => {
-            if (number === '' || category === '' || difficulty === '') {
-              setError(true)
-              setTimeout(() => {
-                setError(false)
-              }, 2000)
-              return;
-            } else {
-              setError(false);
-              navigate("/Quiz")
+        <form
+          onSubmit={(event) => {
+            event.preventDefault(); // Prevent the default form submission behavior
+            if (areAllFieldsFilled()) {
+              navigate("/Quiz");
             }
-          }
-          }
-        >Start The Quiz
-        </Button>
+          }}
+        >
+          <Button
+            type="submit"
+            sx={{ my: 3, px: 5 }}
+            size="large"
+            variant="contained"
+            disabled={!areAllFieldsFilled()}
+          >
+            Start Quiz
+          </Button>
+        </form>
+
+
       </Stack>
     </>
   )
