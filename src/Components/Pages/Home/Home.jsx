@@ -96,7 +96,7 @@ const Home = () => {
 
         <form
           onSubmit={(event) => {
-            event.preventDefault(); // Prevent the default form submission behavior
+            event.preventDefault(); 
             if (areAllFieldsFilled()) {
               navigate("/Quiz");
             }
