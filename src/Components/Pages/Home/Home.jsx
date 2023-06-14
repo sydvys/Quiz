@@ -23,7 +23,7 @@ const Home = () => {
   const [isDifficultyValid, setDifficultyValid] = useState(false);
 
   // Function to check if all fields are filled
-  const areAllFieldsFilled = () => {
+  const allFilled = () => {
     return isNumberValid && isCategoryValid && isDifficultyValid;
   };
 
@@ -97,7 +97,7 @@ const Home = () => {
         <form
           onSubmit={(event) => {
             event.preventDefault(); 
-            if (areAllFieldsFilled()) {
+            if (allFilled()) {
               navigate("/Quiz");
             }
           }}
@@ -107,7 +107,7 @@ const Home = () => {
             sx={{ my: 3, px: 5 }}
             size="large"
             variant="contained"
-            disabled={!areAllFieldsFilled()}
+            disabled={!allFilled()}
           >
             Start Quiz
           </Button>
