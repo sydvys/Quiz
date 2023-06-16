@@ -19,14 +19,19 @@ const Quiz = ({ }) => {
     const updatedQuestions = [...questions];
     updatedQuestions[index].radio = selectedAnswer;
     setQuestions(updatedQuestions);
-
+  
     const currentQuestion = updatedQuestions[index];
-
-    if (currentQuestion.correct_answer === selectedAnswer) {
-      setScore((prevScore) => prevScore + 1);
+    const isCorrect = currentQuestion.correct_answer === selectedAnswer;
+  
+    let updatedScore = 0;
+    for (const question of updatedQuestions) {
+      if (question.correct_answer === question.radio) {
+        updatedScore++;
+      }
     }
+  
+    setScore(updatedScore);
   };
-
 
   return (
     <>

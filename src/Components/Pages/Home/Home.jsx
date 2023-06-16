@@ -22,7 +22,6 @@ const Home = () => {
   const [isCategoryValid, setCategoryValid] = useState(false);
   const [isDifficultyValid, setDifficultyValid] = useState(false);
 
-  // Function to check if all fields are filled
   const allFilled = () => {
     return isNumberValid && isCategoryValid && isDifficultyValid;
   };
@@ -47,8 +46,7 @@ const Home = () => {
           value={number}
           onChange={(event) => {
             setNumber(event.target.value)
-            setNumberValid(event.target.value !== ''); // Set validation status based on field value
-
+            setNumberValid(event.target.value !== ''); 
           }}
         />
 
@@ -63,8 +61,7 @@ const Home = () => {
           onChange={(e) => {
             setCategory(e.target.value);
             fetchData();
-            setCategoryValid(e.target.value !== ''); // Set validation status based on field value
-
+            setCategoryValid(e.target.value !== ''); 
           }}
         >
           {categories.map((category) => (
