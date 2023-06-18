@@ -13,6 +13,7 @@ import { Button } from '@mui/material';
 const Quiz = ({ }) => {
   const { questions, setScore, setQuestions } = useContext(QUIZ_CONTEXT)
   const navigate = useNavigate();
+  const [selectedFlags, setSelectedFlags] = useState(Array(questions.length).fill(false));
 
   const handleRadioChange = (event, index) => {
     const selectedAnswer = event.target.value;
@@ -31,6 +32,10 @@ const Quiz = ({ }) => {
     }
   
     setScore(updatedScore);
+
+    const updatedSelectedFlags = [...selectedFlags];
+    updatedSelectedFlags[index] = true;
+    setSelectedFlags(updatedSelectedFlags);
   };
 
   return (
@@ -57,8 +62,13 @@ const Quiz = ({ }) => {
               />
               <label>f</label>
 
-              {(question.correct_answer === question.radio) ? <Check className={Styles.true} /> : <Clear className={Styles.false} />}
-
+              {selectedFlags[index] && (
+              question.correct_answer === question.radio ? (
+                <Check className={Styles.true} />
+              ) : (
+                <Clear className={Styles.false} />
+              )
+            )}
             </div>
           )
         }
