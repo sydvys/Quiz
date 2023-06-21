@@ -1,9 +1,16 @@
-.true{
+.quiz {
+    justify-content: center;
+    margin: auto;
+    max-width: 500px;
+    padding-left: 10px;
+}
+
+.true {
     padding: 0 10px 0 20px;
     color: rgb(0, 223, 7);
 }
 
-.false{
+.false {
     padding: 0 10px 0 20px;
     color: red;
 }
